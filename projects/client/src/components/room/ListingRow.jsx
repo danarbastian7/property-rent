@@ -20,7 +20,7 @@ import {
   IconButton,
   useToast,
 } from "@chakra-ui/react"
-import { TfiTrash } from "react-icons/tfi"
+import { BsTrash } from "react-icons/bs"
 import { axiosInstance } from "../../api"
 import { Link, useParams } from "react-router-dom"
 
@@ -72,16 +72,15 @@ const ListingRow = ({ name, image_url, id, properties, address, city }) => {
     <>
       <Link to={`/listing/details/${id}`}>
         <Stack
-          borderRadius="2xl"
           w={{ base: "340px", md: "300px" }}
           height={{ base: "220px", md: "auto" }}
           direction="row"
-          bg={useColorModeValue("gray.100", "black")}
-          boxShadow={"base"}
+          boxShadow={"md"}
           padding={5}
           mt={"20px"}
+          bg="white"
         >
-          <Flex flex={0.5} ml="-10px">
+          <Flex flex={0.5} mt="1vh">
             <Image
               // src={`${process.env.REACT_APP_IMG}${getImages[0]}`}
               src={`http://localhost:8204/public/${getImages[randomIndex]}`}
@@ -122,8 +121,9 @@ const ListingRow = ({ name, image_url, id, properties, address, city }) => {
         color="red"
         cursor={"pointer"}
         width={{ base: "340px", md: "300px" }}
+        fontWeight="bold"
       >
-        <TfiTrash />
+        <BsTrash fontWeight={"bolder"} />
       </IconButton>
 
       <Modal isOpen={isOpen} onClose={onClose}>

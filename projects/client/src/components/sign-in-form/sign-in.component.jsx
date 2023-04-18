@@ -210,6 +210,7 @@ const SignIn = () => {
               backgroundColor="linkedin.500"
               _hover={{ backgroundColor: "linkedin.400" }}
               h="45px"
+              cursor={"pointer"}
             >
               Sign In
             </Button>
@@ -225,6 +226,7 @@ const SignIn = () => {
               color="white"
               backgroundColor="red.500"
               _hover={{ backgroundColor: "red.400" }}
+              cursor={"pointer"}
             >
               Sign In With Google
             </Button>

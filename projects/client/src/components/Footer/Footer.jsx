@@ -22,13 +22,15 @@ const Footer = () => {
     <Box
       as="footer"
       role="contentinfo"
-      backgroundColor={"whiteAlpha.700"}
       width="100vw"
       padding="20px"
-      bgColor={"blackAlpha.100"}
-      mt="7vw"
+      bg="white"
+      // mt="-50px"
       bottom={"0"}
+      zIndex={"20"}
       position="fixed"
+      justifyContent={"space-around"}
+      // display={"flex"}
     >
       <Divider />
       <Stack

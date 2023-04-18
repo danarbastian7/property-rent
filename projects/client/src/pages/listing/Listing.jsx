@@ -62,11 +62,13 @@ const Listing = () => {
           "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
         }
         padding={"10px"}
-        width={{ base: "350px", md: "900px" }}
+        width={{ base: "550px", md: "900px" }}
         backgroundColor={"whiteAlpha.900"}
         // ml={{ base: "5vw", md: "10vw" }}
         // mb="10vh"
-        height="100vh"
+        pb="100px"
+        mb="10vh"
+        h={{ md: "65vh", sm: "30vh" }}
       >
         <VStack>
           <Box
