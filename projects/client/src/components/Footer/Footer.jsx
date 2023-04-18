@@ -22,13 +22,14 @@ const Footer = () => {
     <Box
       as="footer"
       role="contentinfo"
-      backgroundColor={"whiteAlpha.700"}
       width="100vw"
       padding="20px"
-      bgColor={"blackAlpha.100"}
-      mt="7vw"
-      bottom={"0"}
-      position="fixed"
+
+      bgColor={"white"}
+      // position="fixed"
+      bottom="0"
+      // height={"100vh"}
+
     >
       <Divider />
       <Stack
