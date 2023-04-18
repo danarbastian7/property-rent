@@ -62,7 +62,7 @@ const Listing = () => {
           "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
         }
         padding={"10px"}
-        maxW={{ base: "350px", md: "900px" }}
+        width={{ base: "350px", md: "900px" }}
         backgroundColor={"whiteAlpha.900"}
         // ml={{ base: "5vw", md: "10vw" }}
         // mb="10vh"
@@ -100,7 +100,7 @@ const Listing = () => {
                     Order List
                   </Button>
                 </Link>
-                {/* <Link to={`/finances/${params.id}`}> */}
+
                 <Link to={`/`}>
                   <Button
                     color={"white"}
@@ -117,21 +117,20 @@ const Listing = () => {
           </Box>
           <Box>
             <Center>
-              <Heading
-                fontFamily={"sans-serif"}
-                fontWeight="bold"
-                fontSize={"2xl"}
-                position="absolute"
-              >
-                Your List of Properties
-              </Heading>
+              <HStack mb="2" p="3" pl="1" pr="1">
+                <Heading
+                  fontFamily={"sans-serif"}
+                  fontWeight="bold"
+                  fontSize={"2xl"}
+                >
+                  Your List of Properties
+                </Heading>
+                <Link to="/property-form">
+                  <GrAdd size={"25px"} />
+                </Link>
+              </HStack>
             </Center>
-            <HStack mb="2" p="3" pl="1" pr="1" justifyContent={"space-between"}>
-              <Link to="/">{/* <GrLinkPrevious size={"15px"} /> */}</Link>
-              <Link to="/property-form">
-                <GrAdd size={"25px"} />
-              </Link>
-            </HStack>
+
             <Grid
               templateColumns={{
                 base: "repeat(1, 1fr)",

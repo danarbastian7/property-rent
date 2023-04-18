@@ -40,6 +40,7 @@ const SignInTenant = () => {
           email,
           password
         )
+        console.log(signInResult, "try")
 
         const idToken = await signInResult.user.getIdToken()
 
@@ -91,7 +92,7 @@ const SignInTenant = () => {
       <Box
         display="flex"
         flexDir="column"
-        width={{ base: "355px", sm: "450px" }}
+        maxW={{ base: "355px", sm: "450px" }}
         alignSelf="center"
         h={{ base: "550px", sm: "650px" }}
         mt={{ sm: "150px", base: "100px" }}
@@ -155,7 +156,16 @@ const SignInTenant = () => {
               <br />
               <br />
               <Text fontSize="20px" mr="20px">
-                Not a tenant? <Link to="/register-tenant">Sign Up</Link>
+                Not a tenant?{" "}
+                <Link
+                  to="/register-tenant"
+                  style={{
+                    color: "blue",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Sign Up
+                </Link>
               </Text>
             </form>
           </VStack>
