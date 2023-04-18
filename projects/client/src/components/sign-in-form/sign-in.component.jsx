@@ -234,22 +234,20 @@ const SignIn = () => {
             Logout
           </Button> */}
 
-              <Text fontSize="20px" mr="20px">
-                Not a user?{" "}
-                <Link
-                  to="/register"
-                  style={{
-                    color: "blue",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Sign Up
-                </Link>
-              </Text>
-            </form>
-          </VStack>
-        </Box>
-
+            <Text fontSize="20px" mr="20px">
+              Not a user?{" "}
+              <Link
+                to="/register"
+                style={{
+                  color: "blue",
+                  textDecoration: "underline",
+                }}
+              >
+                Sign Up
+              </Link>
+            </Text>
+          </form>
+        </VStack>
       </Box>
     </Box>
   )
