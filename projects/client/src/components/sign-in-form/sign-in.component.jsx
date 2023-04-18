@@ -233,21 +233,23 @@ const SignIn = () => {
             {/* <Button buttonType="inverted" onClick={logoutBtnHandler}>
             Logout
           </Button> */}
-            <Text fontSize="20px" mr="20px">
-              Not a user?{" "}
-              <Link
-                to="/register"
-                style={{
-                  color: "blue",
-                  textDecoration: "underline",
-                }}
-              >
-                Sign Up
-              </Link>
-            </Text>
-            {/* </Box> */}
-          </form>
-        </VStack>
+
+              <Text fontSize="20px" mr="20px">
+                Not a user?{" "}
+                <Link
+                  to="/register"
+                  style={{
+                    color: "blue",
+                    textDecoration: "underline",
+                  }}
+                >
+                  Sign Up
+                </Link>
+              </Text>
+            </form>
+          </VStack>
+        </Box>
+
       </Box>
     </Box>
   )
