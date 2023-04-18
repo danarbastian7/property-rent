@@ -24,12 +24,13 @@ const Footer = () => {
       role="contentinfo"
       width="100vw"
       padding="20px"
-
-      bgColor={"white"}
-      // position="fixed"
-      bottom="0"
-      // height={"100vh"}
-
+      bg="white"
+      // mt="-50px"
+      bottom={"0"}
+      zIndex={"20"}
+      position="fixed"
+      justifyContent={"space-around"}
+      // display={"flex"}
     >
       <Divider />
       <Stack

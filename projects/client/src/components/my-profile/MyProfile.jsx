@@ -35,7 +35,7 @@ const MyProfile = () => {
       <Center
         padding="25px"
         // mt={{ base: "75px", md: "200px" }}
-        mb="17vh"
+        // mb="17vh"
         height="100vh"
       >
         <Stack

@@ -210,6 +210,7 @@ const SignIn = () => {
               backgroundColor="linkedin.500"
               _hover={{ backgroundColor: "linkedin.400" }}
               h="45px"
+              cursor={"pointer"}
             >
               Sign In
             </Button>
@@ -225,6 +226,7 @@ const SignIn = () => {
               color="white"
               backgroundColor="red.500"
               _hover={{ backgroundColor: "red.400" }}
+              cursor={"pointer"}
             >
               Sign In With Google
             </Button>
@@ -232,22 +234,20 @@ const SignIn = () => {
             Logout
           </Button> */}
 
-              <Text fontSize="20px" mr="20px">
-                Not a user?{" "}
-                <Link
-                  to="/register"
-                  style={{
-                    color: "blue",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Sign Up
-                </Link>
-              </Text>
-            </form>
-          </VStack>
-        </Box>
-
+            <Text fontSize="20px" mr="20px">
+              Not a user?{" "}
+              <Link
+                to="/register"
+                style={{
+                  color: "blue",
+                  textDecoration: "underline",
+                }}
+              >
+                Sign Up
+              </Link>
+            </Text>
+          </form>
+        </VStack>
       </Box>
     </Box>
   )

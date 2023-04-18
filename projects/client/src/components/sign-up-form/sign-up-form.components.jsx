@@ -110,14 +110,15 @@ const RegisterUser = () => {
   return (
     <Box
       h="fit-content"
+      display={"flex"}
       justifyContent="center"
-      alignItems={"center"}
+      alignItems="center"
       position="absolute"
-      top={"50%"}
+      top="50%"
       left="50%"
       transform="translate(-50%, -50%)"
     >
-      <Container border={"2px solid white"} boxShadow="2xl">
+      <Container boxShadow={"2xl"}>
         <Box p="8">
           <HStack mb="8">
             <Link to="/">
@@ -174,7 +175,12 @@ const RegisterUser = () => {
                 />
                 <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
               </FormControl>
-              <Button type="submit" colorScheme="whatsapp" color="white">
+              <Button
+                type="submit"
+                colorScheme="whatsapp"
+                color="white"
+                cursor={"pointer"}
+              >
                 Sign up
               </Button>
             </Stack>
