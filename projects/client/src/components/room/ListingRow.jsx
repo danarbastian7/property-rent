@@ -32,6 +32,8 @@ const ListingRow = ({ name, image_url, id, properties, address, city }) => {
   const [images, setImages] = useState([])
 
   const getImages = properties.map((val) => val.image_url)
+  const randomIndex = Math.floor(Math.random() * getImages.length)
+  console.log(getImages, "try")
   const deleteProperty = async () => {
     try {
       await axiosInstance.delete(`/property/delete/${id}`)
@@ -77,12 +79,12 @@ const ListingRow = ({ name, image_url, id, properties, address, city }) => {
           bg={useColorModeValue("gray.100", "black")}
           boxShadow={"base"}
           padding={5}
-          // border="2px solid red"
           mt={"20px"}
         >
           <Flex flex={0.5} ml="-10px">
             <Image
-              src={`${process.env.REACT_APP_IMG}${getImages[0]}`}
+              // src={`${process.env.REACT_APP_IMG}${getImages[0]}`}
+              src={`http://localhost:8204/public/${getImages[randomIndex]}`}
               borderRadius="2xl"
               h="130px"
               mt={"20px"}
