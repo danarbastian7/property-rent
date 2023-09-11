@@ -76,8 +76,8 @@ function App() {
   useEffect(() => {
     ;(async () => {
       const { data } = await axios.get(
-        // `${process.env.REACT_APP_API_BASE_URL}/greetings`
-        `http://localhost:8204/greetings`
+        `${process.env.REACT_APP_API_BASE_URL}/greetings`
+        // `http://localhost:8204/api/greetings`
       )
       setMessage(data?.message || "")
     })()
