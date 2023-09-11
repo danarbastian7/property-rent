@@ -29,6 +29,7 @@ const MyProfile = () => {
   const params = useParams()
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const modal2 = useDisclosure()
 
   return (
     <>
