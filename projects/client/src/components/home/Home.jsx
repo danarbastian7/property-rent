@@ -169,14 +169,19 @@ const Home = () => {
             </section>
           </div>
           <Center>
-            <Box marginBottom={{ base: "15vh", md: "20vh" }} maxW={"1296px"}>
+            <Box
+              marginBottom={{ base: "15vh", md: "20vh" }}
+              maxW={"1296px"}
+              marginTop="10vh"
+            >
               <Grid
                 templateColumns={{ md: "repeat(3,1fr)" }}
                 gap={{ md: "20px", base: "0px" }}
               >
                 {renderProperty()}
               </Grid>
-              <HStack gap="2px" marginTop={{ md: "5vh", base: "0" }}>
+
+              <HStack gap="2px" marginTop={{ md: "10vh", base: "0" }}>
                 {!property.length ? (
                   <Center>
                     <Alert
