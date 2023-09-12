@@ -21,40 +21,41 @@ import {
 } from "@chakra-ui/react"
 import ReAuth from "../reAuthUser/reAuth.component"
 import moment from "moment"
+import EditProfile2 from "../edit-profile/EditProfile2"
+import { EditProfile } from "../../lib/editProfile/editProfile"
 
 const MyProfile = () => {
-  const authSelector = useSelector((state) => state.auth)
-  const [edit, setEdit] = useState(false)
-  const [user, setUser] = useState({})
-  const params = useParams()
-  const toast = useToast()
+  const { authSelector, formik, openModal, isModalOpen, closeModal } =
+    EditProfile()
+
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const modal2 = useDisclosure()
 
   return (
     <>
-      <Center padding="25px" height="100vh">
+      <Center padding="25px" height="100vh" marginBottom={"15vh"}>
         <Stack
           borderWidth="1px"
           borderRadius="lg"
-          w={{ sm: "100%", md: "640px" }}
-          height={{ sm: "546px", md: "20rem" }}
+          maxW={{ sm: "100%", md: "650px" }}
+          maxH={{ sm: "546px", md: "20rem" }}
           direction={{ base: "column", md: "row" }}
           bg={useColorModeValue("white", "gray.900")}
           boxShadow={"2xl"}
-          padding={4}
+          padding={8}
+          // border="2px solid red"
         >
           <Flex
             flex={5}
             justifyContent={"center"}
+            // alignItems={{"self-start" }}
+            alignSelf={{ base: "center" }}
             maxHeight={{ base: "500px", md: "280px" }}
             maxW={"300px"}
           >
-            <Image
-              height={"266px"}
-              width={"278px"}
+            <Avatar
+              h={{ base: "278px", md: "250px" }}
+              w={{ base: "278px", md: "250px" }}
               bg={useColorModeValue("white", "gray.900")}
-              // src={authSelector?.profile_picture}
               src={`http://localhost:8204/public/${authSelector?.profile_picture}`}
               boxShadow={"2xl"}
               mt="10px"
@@ -100,6 +101,14 @@ const MyProfile = () => {
               >
                 #{moment(authSelector.birthdate).format("LL")}
               </Badge>
+              <Badge
+                px={2}
+                py={1}
+                bg={useColorModeValue("gray.50", "gray.800")}
+                fontWeight={"400"}
+              >
+                #{authSelector.gender}
+              </Badge>
             </Stack>
 
             <ButtonGroup
@@ -107,23 +116,9 @@ const MyProfile = () => {
               mt={"2rem"}
               direction={"row"}
               padding={2}
-              justifyContent={"space-between"}
+              justifyContent={"center"}
               alignItems={"center"}
             >
-              {/* <Link to={"/editprofile"}>
-                <Button
-                  flex={1}
-                  fontSize={"sm"}
-                  rounded={"lg"}
-                  boxShadow={
-                    "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-                  }
-                  colorScheme="whatsapp"
-                  cursor={"pointer"}
-                >
-                  Edit Profile
-                </Button>
-              </Link> */}
               <Button
                 flex={1}
                 fontSize={"sm"}
@@ -133,9 +128,14 @@ const MyProfile = () => {
                 }
                 colorScheme="whatsapp"
                 cursor={"pointer"}
+                onClick={openModal}
+                maxW="75%"
               >
                 Edit Profile
               </Button>
+              {isModalOpen && (
+                <EditProfile2 openModal={openModal} onClose={closeModal} />
+              )}{" "}
               {authSelector.loginWith === "email" ? (
                 <Button
                   flex={1}
