@@ -103,12 +103,7 @@ export const EditProfile = () => {
   const optionSelect = options.map((val) => {
     return { value: val.value, label: val.label }
   })
-  const handleChange = (values) => {
-    console.log(`selected ${values}`)
 
-    const { name, value } = values
-    formik.setFieldValue(name, value)
-  }
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => {
@@ -117,6 +112,22 @@ export const EditProfile = () => {
 
   const closeModal = () => {
     setIsModalOpen(false)
+  }
+
+  const [selectedImage, setSelectedImage] = useState(null)
+  const handleImageChange = (event) => {
+    const file = event.target.files[0]
+
+    if (file) {
+      const allowedTypes = ["image/jpeg", "image/png", "image/jpg"]
+      if (allowedTypes.includes(file.type)) {
+        const imageURL = URL.createObjectURL(file)
+        setSelectedImage(imageURL)
+        formik.setFieldValue("profile_picture", file)
+      } else {
+        alert("Please select a valid image file (JPEG, PNG).")
+      }
+    }
   }
   return {
     formik,
@@ -127,5 +138,7 @@ export const EditProfile = () => {
     openModal,
     closeModal,
     isModalOpen,
+    handleImageChange,
+    selectedImage,
   }
 }
