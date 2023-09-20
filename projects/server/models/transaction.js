@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       start_date: DataTypes.DATE,
       end_date: DataTypes.DATE,
       price: DataTypes.STRING,
+      total_price: DataTypes.STRING,
       payment_proof: DataTypes.STRING,
       status: DataTypes.STRING,
       exp_date: DataTypes.DATE,
