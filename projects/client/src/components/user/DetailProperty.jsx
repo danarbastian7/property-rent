@@ -49,6 +49,7 @@ import { Carousel } from "antd"
 import { GrFormNext } from "react-icons/gr"
 import { Calendar, Avatar, List, message, Button, Result } from "antd"
 import moment from "moment"
+import ReserveModal from "./ReserveModal"
 
 const DetailProperty = () => {
   // const reserveModal = useDisclosure()
@@ -112,28 +113,6 @@ const DetailProperty = () => {
   //   console.log(value.format("YYYYMMDD"), "format")
   // }
 
-  const DateCellRender = (date) => {
-    const dateStr = date.format("YYYYMMDD")
-
-    let result = ""
-
-    for (let data of newFormatted) {
-      if (data.newFormatted === dateStr) {
-        result += `${data.PropertyItem.item_name}\n`
-      }
-    }
-    if (result !== "") {
-      return (
-        <div>
-          <Badge
-            status="error"
-            text={`${result}`}
-            style={{ fontSize: "0.5rem" }}
-          />
-        </div>
-      )
-    }
-  }
   //=============================
   // const getUserReview = property?.Reviews
 
@@ -147,8 +126,6 @@ const DetailProperty = () => {
     padding: 0,
   }
 
-  const findId = room.map((val) => <option key={val.id}>{val.name}</option>)
-
   useEffect(() => {
     fetchRoom()
     fetchProperty()
@@ -156,12 +133,7 @@ const DetailProperty = () => {
   }, [])
   return (
     <Center>
-      <Container
-        width={"-moz-max-content"}
-        height="-moz-max-content"
-        mt={"100px"}
-        maxW={{ base: "100vw", md: "60vw" }}
-      >
+      <Container mt={"100px"} maxW={{ base: "100vw", md: "1298px" }} mb="25vh">
         <Link to={`/`}>
           <GrLinkPrevious size={"25px"} />
         </Link>
@@ -205,7 +177,7 @@ const DetailProperty = () => {
             <Text fontFamily={"sans-serif"} fontSize={"13.5px"}>
               {property?.description}
             </Text>
-            <Link to="/dummy-transaction">
+            {/* <Link to="/dummy-transaction">
               <Button2
                 colorScheme={"orange"}
                 ml="0"
@@ -217,7 +189,8 @@ const DetailProperty = () => {
                 Reserve
                 <GrFormNext size={"25px"} />
               </Button2>
-            </Link>
+            </Link> */}
+            <ReserveModal />
 
             {room.length !== 0 ? (
               <>
@@ -243,73 +216,6 @@ const DetailProperty = () => {
                 )}
               </>
             ) : null}
-
-            {/* <Modal
-              isOpen={reserveModal.isOpen}
-              onClose={reserveModal.onClose}
-              size="sm"
-            >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Reservation Form</ModalHeader>
-                <ModalCloseButton color={"red"} cursor="pointer" />
-                <ModalBody>
-                  <FormControl>
-                    <FormLabel>Select Room</FormLabel>
-                    <Select>
-                      {room.map((val) => (
-                        <option key={val.id}>{val.item_name}</option>
-                      ))}
-                    </Select>
-                    <FormLabel mt={"5px"}>Amount of Guest</FormLabel>
-                    <InputGroup>
-                      <Input
-                        type={"number"}
-                        fontStyle="normal"
-                        borderColor={"black"}
-                      />
-                      <InputRightAddon children="people" />
-                    </InputGroup>
-                    <FormLabel mt={"5px"}>CheckIn Date</FormLabel>
-                    <InputGroup>
-                      <Input type={"date"} />
-                    </InputGroup>
-                    <FormLabel mt={"5px"}>CheckOut Date</FormLabel>
-                    <InputGroup>
-                      <Input type={"date"} />
-                    </InputGroup>
-                    <FormLabel mt={"5px"}>Name</FormLabel>
-                    <InputGroup>
-                      <Input type={"text"} fontStyle="normal" />
-                    </InputGroup>
-                    <FormLabel mt={"5px"}>Email</FormLabel>
-                    <InputGroup>
-                      <Input type={"text"} fontStyle="normal" />
-                    </InputGroup>
-                  </FormControl>
-                </ModalBody>
-                <ModalFooter>
-                  <Button2
-                    colorScheme="red"
-                    mr={3}
-                    onClick={reserveModal.onClose}
-                    size="sm"
-                    cursor={"pointer"}
-                  >
-                    Close
-                  </Button2>
-                  <Button2
-                    // variant="ghost"
-                    color={"white"}
-                    colorScheme="whatsapp"
-                    size="sm"
-                    cursor={"pointer"}
-                  >
-                    Checkout
-                  </Button2>
-                </ModalFooter>
-              </ModalContent>
-            </Modal> */}
           </GridItem>
           <GridItem>
             <Text>Available rooms:</Text>
