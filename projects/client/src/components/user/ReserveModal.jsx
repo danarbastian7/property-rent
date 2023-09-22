@@ -3,6 +3,8 @@ import {
   FormControl,
   FormLabel,
   Input,
+  InputGroup,
+  InputLeftAddon,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,32 +13,43 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Text,
 } from "@chakra-ui/react"
 import { GrFormNext } from "react-icons/gr"
+import { useState } from "react"
 import { DetailPropertyFunc } from "../../lib/detailProperty/detailProperty"
+import { ReactCalendar } from "../../lib/reactCalendar/reactCalendar"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { useState } from "react"
+import moment from "moment"
 
 const ReserveModal = () => {
-  const { openModal, isModalOpen, closeModal } = DetailPropertyFunc()
-  const [startDate, setStartDate] = useState(null)
-  const [endDate, setEndDate] = useState(null)
-
-  const datePickerStyles = {
-    // Example inline styles for the DatePicker container
-    fontFamily: "Arial, sans-serif",
-    border: "2px solid #ccc",
+  const {
+    openModal,
+    isModalOpen,
+    closeModal,
+    propertyItem,
+    selectedItem,
+    setSelectedItem,
+    priceValue,
+  } = DetailPropertyFunc()
+  const {
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    datePickerStyles,
+    inputStyles,
+    totalDays,
+  } = ReactCalendar()
+  const calculateTotalPrice = () => {
+    return totalDays * priceValue
   }
+  const totalPrice = calculateTotalPrice()
+  // ===========================
 
-  const inputStyles = {
-    // Example inline styles for the input field
-    width: "65%",
-    padding: "10px",
-    borderRadius: "5px",
-    border: "2px solid grey",
-    color: "black",
-  }
+  console.log(totalPrice)
+
   return (
     <>
       <Button
@@ -65,20 +78,33 @@ const ReserveModal = () => {
               <Input type={"text"} pattern="[A-Za-z]+" />
             </FormControl>
             <FormControl>
-              <FormLabel>Last Name</FormLabel>
-              <Select>
-                <option>Hotel a</option>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Last Name</FormLabel>
-              <Select>
-                <option>Hotel a</option>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <FormLabel>Price /night</FormLabel>
-              <Input isReadOnly />
+              <>
+                <FormLabel>Room Type</FormLabel>
+                <Select
+                  value={selectedItem}
+                  onChange={(e) => setSelectedItem(e.target.value)}
+                >
+                  <option
+                    value="None"
+                    style={{
+                      fontStyle: "italic",
+                    }}
+                  >
+                    None
+                  </option>
+                  {propertyItem.map((val) => (
+                    <option key={val.item_name} value={val.item_name}>
+                      {val.item_name}
+                    </option>
+                  ))}
+                </Select>
+
+                <FormLabel>Price /night</FormLabel>
+                <InputGroup>
+                  <InputLeftAddon children="¥" />
+                  <Input value={priceValue} isReadOnly />
+                </InputGroup>
+              </>
             </FormControl>
             <FormControl>
               <FormLabel>Date</FormLabel>
@@ -90,6 +116,7 @@ const ReserveModal = () => {
                   setStartDate(update[0])
                   setEndDate(update[1])
                 }}
+                dateFormat="dd/MM/yyyy"
                 withPortal
                 style={datePickerStyles} // Apply styles to the DatePicker container
                 calendarClassName="custom-calendar" // You can apply classes to the calendar container for more styling
@@ -98,7 +125,10 @@ const ReserveModal = () => {
             </FormControl>
             <FormControl>
               <FormLabel>Total Price</FormLabel>
-              <Input isReadOnly />
+              <InputGroup>
+                <InputLeftAddon children="¥" />
+                <Input isReadOnly value={totalPrice} />
+              </InputGroup>
             </FormControl>
           </ModalBody>
           <ModalFooter gap={"3"} pb="10">

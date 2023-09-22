@@ -89,10 +89,10 @@ const transactionController = {
       // const foundUserById = await db.User.findByPk(req.user.id)
 
       const dummyTransaction = await db.Transaction.create({
-        start_date: start,
-        end_date: end,
+        start_date: req.body.start_date,
+        end_date: req.body.end_date,
         price: req.body.price,
-        total_price: req.body.price,
+        total_price: req.body.total_price,
         PropertyItemId: req.body.PropertyItemId,
         PropertyId: req.body.PropertyId,
 
