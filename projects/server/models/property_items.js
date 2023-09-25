@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       PropertyItem.belongsTo(models.Property)
       PropertyItem.hasMany(models.Images, { onDelete: "CASCADE" })
       PropertyItem.hasMany(models.Calendar, { onDelete: "CASCADE" })
+      // PropertyItem.hasMany(models.Transaction, { onDelete: "CASCADE" })
     }
   }
   PropertyItem.init(

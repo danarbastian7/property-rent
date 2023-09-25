@@ -15,8 +15,8 @@ router.patch(
   transactionController.paymentProof
 )
 
-// router.post("/", verifyToken, transactionController.createTransactionDummy)
-router.post("/", transactionController.createTransactionDummy)
+router.post("/", verifyToken, transactionController.createTransactionDummy)
+// router.post("/", transactionController.createTransactionDummy)
 
 router.patch("/approve/:id", transactionController.transactionApprove)
 router.patch("/reject/:id", transactionController.transactionReject)

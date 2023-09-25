@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Property.belongsTo(models.User)
       Property.hasMany(models.PropertyItem, { onDelete: "CASCADE" })
       Property.hasMany(models.PropertyImage, { onDelete: "CASCADE" })
-      Property.hasMany(models.Transaction, { onDelete: "CASCADE" })
+      // Property.hasMany(models.Transaction, { onDelete: "CASCADE" })
       Property.hasMany(models.Review)
     }
   }

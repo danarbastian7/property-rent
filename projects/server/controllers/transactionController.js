@@ -82,24 +82,40 @@ const transactionController = {
       const expired_date = moment()
         .add(2, "hours")
         .format("YYYY-MM-DD HH:mm:ss")
-      const start = moment().add(3, "days").format("YYYY-MM-DD")
-      const end = moment().add(5, "days").format("YYYY-MM-DD")
-      const diff = moment(end).diff(moment(start), "days")
+      // const start = moment().add(3, "days").format("YYYY-MM-DD")
+      // const end = moment().add(5, "days").format("YYYY-MM-DD")
+      // const diff = moment(end).diff(moment(start), "days")
 
-      // const foundUserById = await db.User.findByPk(req.user.id)
-
+      const foundUserById = await db.User.findByPk(req.user.id)
+      const {
+        first_name,
+        last_name,
+        start_date,
+        end_date,
+        price,
+        // total_price,
+        PropertyItemId,
+        PropertyId,
+      } = req.body
+      const startMoment = moment(start_date, "YYYY-MM-DD")
+      const endMoment = moment(end_date, "YYYY-MM-DD")
+      const diff = endMoment.diff(startMoment, "days")
+      // Calculate total_price
+      const total_pricecount = price * diff
       const dummyTransaction = await db.Transaction.create({
-        start_date: req.body.start_date,
-        end_date: req.body.end_date,
-        price: req.body.price,
-        total_price: req.body.total_price,
-        PropertyItemId: req.body.PropertyItemId,
-        PropertyId: req.body.PropertyId,
+        first_name,
+        last_name,
+        start_date,
+        end_date,
+        price,
+        total_price: total_pricecount,
+        PropertyItemId,
+        PropertyId,
 
-        // UserId: req.body.UserId,
+        // UserId: 23,
         UserId: foundUserById.id,
-
         exp_date: expired_date,
+
         status: "waiting for payment",
       })
 
