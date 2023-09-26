@@ -2,17 +2,21 @@ import { createSlice } from "@reduxjs/toolkit"
 // const storedPropertyItemId = localStorage.getItem("PropertyItemId")
 // const price = localStorage.getItem("price")
 
+const totalPrice = localStorage.getItem("total_price") || "" // Default to an empty string if not found in localStorage
+const startDate = localStorage.getItem("start_date") || ""
+const endDate = localStorage.getItem("end_date") || ""
+
 const initialState = {
   id: 0,
   item_name: "",
   description: "",
   capacity: "",
   price: "",
-  total_price: "",
+  total_price: "" || totalPrice,
   PropertyId: "",
   PropertyItemId: "",
-  start_date: "",
-  end_date: "",
+  start_date: "" || startDate,
+  end_date: "" || endDate,
 }
 
 const roomSlice = createSlice({
@@ -20,21 +24,19 @@ const roomSlice = createSlice({
   initialState,
   reducers: {
     roommate: (state, action) => {
-      state.id = action.payload.id
-      state.item_name = action.payload.item_name
-      state.description = action.payload.description
-      state.capacity = action.payload.capacity
-      state.price = action.payload.price
-      state.total_price = action.payload.total_price
-      state.PropertyId = action.payload.PropertyId
-      // localStorage.setItem("price", action.payload.price)
-      state.PropertyItemId = action.payload.PropertyItemId
-      state.start_date = action.payload.start_date
-      state.end_date = action.payload.end_date
-
-      // state.first_name = action.payload.first_name
-      // state.last_name = action.payload.last_name
-      console.log(action.payload)
+      return {
+        ...state,
+        id: action.payload.id,
+        item_name: action.payload.item_name,
+        description: action.payload.description,
+        capacity: action.payload.capacity,
+        price: action.payload.price,
+        total_price: action.payload.total_price,
+        PropertyId: action.payload.PropertyId,
+        PropertyItemId: action.payload.PropertyItemId,
+        start_date: action.payload.start_date,
+        end_date: action.payload.end_date,
+      }
     },
   },
 })

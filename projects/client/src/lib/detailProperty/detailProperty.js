@@ -1,7 +1,6 @@
 import moment from "moment"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
 import { axiosInstance } from "../../api"
 import { roommate } from "../../redux/features/roomSlice"
@@ -9,16 +8,13 @@ import { ReactCalendar } from "../reactCalendar/reactCalendar"
 
 export const DetailPropertyFunc = () => {
   const dispatch = useDispatch()
-  // Total Price
-  const [totalPrice, setTotalPrice] = useState(0)
-  // const totalPriceFunc = () => {
-  //   return totalDays * priceValue
-  // }
-  // console.log(totalPrice, "count price")
+  const selector = useSelector((state) => state.room)
 
   // React Calendar
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
+  console.log(startDate, "coba")
+  console.log(endDate, "coba2")
 
   const calculateDateDiff = () => {
     if (startDate && endDate) {
@@ -30,13 +26,12 @@ export const DetailPropertyFunc = () => {
     }
     return 0
   }
-  const totalDays = calculateDateDiff()
-  //
 
   // =============== Modal Area
   const [isModalOpen, setIsModalOpen] = useState(false)
   const params = useParams()
   const [roomCard, setRoomCard] = useState([])
+
   const openModal = () => {
     setIsModalOpen(true)
   }
@@ -44,22 +39,24 @@ export const DetailPropertyFunc = () => {
   const closeModal = () => {
     setIsModalOpen(false)
   }
+
   // ===============================
 
   const fetchRoomById = async () => {
     try {
       const response = await axiosInstance.get(`/property/${params.id}`)
-
       setRoomCard(response.data.data)
       setPropertyItem(response.data.data.PropertyItems)
     } catch (err) {
       console.log(err)
     }
   }
+
   // ===============================
   const [propertyItem, setPropertyItem] = useState([])
-  const [selectedItem, setSelectedItem] = useState("")
+  const [selectedItem, setSelectedItem] = useState("None")
   const [priceValue, setPriceValue] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
   const [propertyItemId, setPropertyItemId] = useState("")
 
   const getPriceFromSelectedItem = () => {
@@ -68,35 +65,40 @@ export const DetailPropertyFunc = () => {
     )
     return selectedPropertyItem ? selectedPropertyItem.price : 0
   }
+
   const getIdFromSelectedItem = () => {
     const selectedPropertyItem = propertyItem.find(
       (item) => item.item_name === selectedItem
     )
-
     return selectedPropertyItem ? selectedPropertyItem.id : 0
+  }
+
+  const totalDays = calculateDateDiff()
+  const updateTotalPrice = () => {
+    return priceValue * totalDays
   }
 
   useEffect(() => {
     fetchRoomById()
     setPriceValue(getPriceFromSelectedItem())
     setPropertyItemId(getIdFromSelectedItem())
-    // Calculate total price with the latest values
-    const totalDays = calculateDateDiff()
-    const price = getPriceFromSelectedItem()
-    const total = totalDays * price
-    setTotalPrice(total)
-  }, [selectedItem])
+    setTotalPrice(updateTotalPrice())
+  }, [selectedItem, totalDays, priceValue, totalPrice])
+
   useEffect(() => {
+    const updatedStartDate = moment(startDate).add(1, "days").toDate()
+    const updatedEndDate = moment(endDate).add(1, "days").toDate()
+
     dispatch(
       roommate({
         PropertyItemId: propertyItemId,
         price: priceValue,
-        start_date: startDate,
-        end_date: endDate,
-        totalPrice: totalPrice,
+        start_date: updatedStartDate,
+        end_date: updatedEndDate,
+        total_price: updateTotalPrice(),
       })
     )
-  }, [propertyItemId, priceValue, startDate, endDate, totalPrice])
+  }, [propertyItemId, startDate, endDate])
 
   return {
     openModal,
@@ -113,7 +115,5 @@ export const DetailPropertyFunc = () => {
     setStartDate,
     endDate,
     setEndDate,
-    totalPrice,
-    totalDays,
   }
 }

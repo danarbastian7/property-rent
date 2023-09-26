@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
@@ -21,6 +22,8 @@ import { ReactCalendar } from "../../lib/reactCalendar/reactCalendar"
 import { TransactionFunc } from "../../lib/transaction/transaction"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import { useSelector } from "react-redux"
+import moment from "moment"
 
 const ReserveModal = () => {
   const {
@@ -31,22 +34,16 @@ const ReserveModal = () => {
     selectedItem,
     setSelectedItem,
     priceValue,
-    propertyItemId,
     startDate,
     setStartDate,
     endDate,
     setEndDate,
-    totalDays,
   } = DetailPropertyFunc()
   const { datePickerStyles, inputStyles } = ReactCalendar()
+  const selector = useSelector((state) => state.room)
   const selectedStartDate = startDate
-
   const { formChangeHandler, formik } = TransactionFunc(selectedStartDate)
 
-  const calculateTotalPrice = () => {
-    return totalDays * priceValue
-  }
-  const totalPrice = calculateTotalPrice()
   const handleFormSubmit = (event) => {
     event.preventDefault()
     formik.handleSubmit()
@@ -56,8 +53,6 @@ const ReserveModal = () => {
     setStartDate(start)
     setEndDate(end)
   }
-
-  console.log(totalPrice, "prop it id")
 
   return (
     <>
@@ -79,25 +74,29 @@ const ReserveModal = () => {
             <ModalHeader>Make your reservation</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
-              <FormControl>
+              <FormControl isInvalid={formik.errors.first_name}>
                 <FormLabel>First Name</FormLabel>
                 <Input
                   type={"text"}
-                  pattern="[A-Za-z]+"
+                  // pattern="[A-Za-z]+"
                   name="first_name"
                   onChange={formChangeHandler}
                   value={formik.values.first_name}
+                  isRequired
                 />
+                <FormErrorMessage>{formik.errors.first_name}</FormErrorMessage>
               </FormControl>
-              <FormControl>
+              <FormControl isInvalid={formik.errors.last_name}>
                 <FormLabel>Last Name</FormLabel>
                 <Input
                   type={"text"}
-                  pattern="[A-Za-z]+"
+                  // pattern="[A-Za-z]+"
                   name="last_name"
                   onChange={formChangeHandler}
                   value={formik.values.last_name}
+                  isRequired
                 />
+                <FormErrorMessage>{formik.errors.last_name}</FormErrorMessage>
               </FormControl>
               <FormControl>
                 <>
@@ -136,6 +135,7 @@ const ReserveModal = () => {
               <FormControl>
                 <FormLabel>Date</FormLabel>
                 <DatePicker
+                  minDate={moment().toDate()}
                   selectsRange={true}
                   startDate={startDate}
                   endDate={endDate}
@@ -153,7 +153,7 @@ const ReserveModal = () => {
                   <InputLeftAddon children="¥" />
                   <Input
                     isReadOnly
-                    value={totalPrice}
+                    value={selector.total_price}
                     onChange={formChangeHandler}
                     name="total_price"
                   />
