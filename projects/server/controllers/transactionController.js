@@ -3,7 +3,6 @@ const db = require("../models")
 const automaticPaymentCheck = require("../schedule/paymentCheck")
 const automaticSendMail = require("../schedule/reminderCheckin")
 const emailer = require("../lib/emailer")
-
 const fs = require("fs")
 const handlebars = require("handlebars")
 const Transaction = db.Transaction
@@ -82,9 +81,6 @@ const transactionController = {
       const expired_date = moment()
         .add(2, "hours")
         .format("YYYY-MM-DD HH:mm:ss")
-      // const start = moment().add(3, "days").format("YYYY-MM-DD")
-      // const end = moment().add(5, "days").format("YYYY-MM-DD")
-      // const diff = moment(end).diff(moment(start), "days")
 
       const foundUserById = await db.User.findByPk(req.user.id)
       const {
@@ -93,26 +89,20 @@ const transactionController = {
         start_date,
         end_date,
         price,
-        // total_price,
+        total_price,
         PropertyItemId,
         PropertyId,
       } = req.body
-      const startMoment = moment(start_date, "YYYY-MM-DD")
-      const endMoment = moment(end_date, "YYYY-MM-DD")
-      const diff = endMoment.diff(startMoment, "days")
-      // Calculate total_price
-      const total_pricecount = price * diff
+
       const dummyTransaction = await db.Transaction.create({
         first_name,
         last_name,
         start_date,
         end_date,
         price,
-        total_price: total_pricecount,
+        total_price,
         PropertyItemId,
         PropertyId,
-
-        // UserId: 23,
         UserId: foundUserById.id,
         exp_date: expired_date,
 
