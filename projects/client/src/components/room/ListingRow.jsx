@@ -19,6 +19,8 @@ import {
   useDisclosure,
   IconButton,
   useToast,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react"
 import { BsTrash } from "react-icons/bs"
 import { axiosInstance } from "../../api"
@@ -70,61 +72,64 @@ const ListingRow = ({ name, image_url, id, properties, address, city }) => {
 
   return (
     <>
-      <Link to={`/listing/details/${id}`}>
-        <Stack
-          w={{ base: "340px", md: "300px" }}
-          height={{ base: "220px", md: "auto" }}
-          direction="row"
-          boxShadow={"md"}
-          padding={5}
-          mt={"20px"}
-          bg="white"
-        >
-          <Flex flex={0.5} mt="1vh">
-            <Image
-              // src={`${process.env.REACT_APP_IMG}${getImages[0]}`}
-              src={`http://localhost:8204/public/${getImages[randomIndex]}`}
-              borderRadius="2xl"
-              h="130px"
-              mt={"20px"}
-              width={"150px"}
-              layout={"fill"}
-            />
-          </Flex>
+      <Grid templateColumns={{ base: "1fr", md: "repeat(4, 1fr)" }}>
+        <GridItem>
           <Stack
-            flex={1}
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="start"
+            w={{ base: "340px", md: "300px" }}
+            height={{ base: "220px", md: "auto" }}
+            direction="row"
+            boxShadow={"md"}
+            padding={5}
+            mt={"20px"}
+            bg="white"
+            borderRadius={"5px"}
           >
-            <Text
-              fontSize={"md"}
-              fontFamily={"body"}
-              fontWeight="bold"
-              pl="10px"
-              color={"black"}
-            >
-              {name || "name"}
-              <br />
-              <Text fontSize={"small"} fontFamily={"mono"} fontWeight="light">
-                {city?.cities_name || "cities"}
-              </Text>
-            </Text>
+            <IconButton onClick={onOpen} cursor="pointer">
+              <BsTrash fontWeight={"bolder"} />
+            </IconButton>
+            <Link to={`/listing/details/${id}`}>
+              <Box
+                border={"2px solid"}
+                boxShadow={"md"}
+                borderColor="orange.300"
+              >
+                <Image
+                  // src={`${process.env.REACT_APP_IMG}${getImages[0]}`}
+                  src={`http://localhost:8204/public/${getImages[randomIndex]}`}
+                  h="130px"
+                  width={"170px"}
+                  // layout={"fill"}
+                />
+                {/* </Flex> */}
+                <Stack
+                  flex={1}
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="start"
+                >
+                  <Text
+                    fontSize={"md"}
+                    fontFamily={"body"}
+                    fontWeight="bold"
+                    pl="10px"
+                    color={"black"}
+                  >
+                    {name || "name"}
+                    <br />
+                    <Text
+                      fontSize={"small"}
+                      fontFamily={"mono"}
+                      fontWeight="light"
+                    >
+                      {city?.cities_name || "cities"}
+                    </Text>
+                  </Text>
+                </Stack>
+              </Box>
+            </Link>
           </Stack>
-        </Stack>
-      </Link>
-      <IconButton
-        onClick={onOpen}
-        mt={{ base: "-220px", md: "20px" }}
-        ml={{ base: "0px", md: "-310px" }}
-        position={{ base: "sticky", md: "sticky" }}
-        color="red"
-        cursor={"pointer"}
-        width={{ base: "340px", md: "300px" }}
-        fontWeight="bold"
-      >
-        <BsTrash fontWeight={"bolder"} />
-      </IconButton>
+        </GridItem>
+      </Grid>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

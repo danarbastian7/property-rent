@@ -31,6 +31,9 @@ export const DetailPropertyFunc = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const params = useParams()
   const [roomCard, setRoomCard] = useState([])
+  const [images, setImages] = useState([])
+  const [propertyItem, setPropertyItem] = useState([])
+  const [room, setRoom] = useState([])
 
   const openModal = () => {
     setIsModalOpen(true)
@@ -47,13 +50,14 @@ export const DetailPropertyFunc = () => {
       const response = await axiosInstance.get(`/property/${params.id}`)
       setRoomCard(response.data.data)
       setPropertyItem(response.data.data.PropertyItems)
+      setImages(response.data.data.PropertyImages)
     } catch (err) {
       console.log(err)
     }
   }
 
   // ===============================
-  const [propertyItem, setPropertyItem] = useState([])
+
   const [selectedItem, setSelectedItem] = useState("None")
   const [priceValue, setPriceValue] = useState(0)
   const [totalPrice, setTotalPrice] = useState(0)
@@ -80,6 +84,7 @@ export const DetailPropertyFunc = () => {
 
   useEffect(() => {
     fetchRoomById()
+
     setPriceValue(getPriceFromSelectedItem())
     setPropertyItemId(getIdFromSelectedItem())
     setTotalPrice(updateTotalPrice())
@@ -115,5 +120,6 @@ export const DetailPropertyFunc = () => {
     setStartDate,
     endDate,
     setEndDate,
+    images,
   }
 }
