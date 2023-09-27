@@ -74,7 +74,7 @@ module.exports = {
           { model: db.Categories },
           { model: db.PropertyImage },
           { model: db.Cities },
-          { model: db.PropertyItem },
+          { model: db.PropertyItem, include: [{ model: db.Images }] },
           { model: db.Review, include: [{ model: db.User }] },
         ],
       })

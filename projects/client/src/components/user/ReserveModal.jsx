@@ -72,7 +72,7 @@ const ReserveModal = () => {
         <form onSubmit={handleFormSubmit}>
           <ModalContent>
             <ModalHeader>Make your reservation</ModalHeader>
-            <ModalCloseButton />
+            <ModalCloseButton cursor={"pointer"} />
             <ModalBody pb={6}>
               <FormControl isInvalid={formik.errors.first_name}>
                 <FormLabel>First Name</FormLabel>
@@ -161,15 +161,15 @@ const ReserveModal = () => {
               </FormControl>
             </ModalBody>
             <ModalFooter gap={"3"} pb="10">
-              <Button
-                colorScheme={"orange"}
-                type="submit"
-                // onClick={handleFormSubmit}
-              >
+              <Button colorScheme={"orange"} type="submit" cursor={"pointer"}>
                 Reserve
               </Button>
 
-              <Button colorScheme={"red"} onClick={closeModal}>
+              <Button
+                colorScheme={"red"}
+                onClick={closeModal}
+                cursor={"pointer"}
+              >
                 Cancel
               </Button>
             </ModalFooter>
