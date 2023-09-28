@@ -100,7 +100,6 @@ const ListingRow = ({ name, image_url, id, properties, address, city }) => {
                   width={"170px"}
                   // layout={"fill"}
                 />
-                {/* </Flex> */}
                 <Stack
                   flex={1}
                   flexDirection="column"

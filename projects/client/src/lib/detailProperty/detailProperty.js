@@ -45,10 +45,11 @@ export const DetailPropertyFunc = () => {
 
   // ===============================
 
-  const fetchRoomById = async () => {
+  const fetchPropertyById = async () => {
     try {
       const response = await axiosInstance.get(`/property/${params.id}`)
       setRoomCard(response.data.data)
+      setRoom(response.data.data.PropertyItems)
       setPropertyItem(response.data.data.PropertyItems)
       setImages(response.data.data.PropertyImages)
     } catch (err) {
@@ -83,7 +84,7 @@ export const DetailPropertyFunc = () => {
   }
 
   useEffect(() => {
-    fetchRoomById()
+    fetchPropertyById()
 
     setPriceValue(getPriceFromSelectedItem())
     setPropertyItemId(getIdFromSelectedItem())
@@ -121,5 +122,7 @@ export const DetailPropertyFunc = () => {
     endDate,
     setEndDate,
     images,
+    room,
+    fetchPropertyById,
   }
 }

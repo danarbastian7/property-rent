@@ -32,114 +32,26 @@ import { Link, useParams } from "react-router-dom"
 import RoomCard from "../../components/room/RoomCard"
 import { GrLinkPrevious, GrAdd } from "react-icons/gr"
 import { BiEditAlt } from "react-icons/bi"
-import Slider from "react-slick"
-import { Calendar } from "antd"
+
 import { Badge, Popover } from "antd"
-
-// import "react-calendar/dist/Calendar.css"
-
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 import { useSelector } from "react-redux"
-import { useFormik } from "formik"
+import { DetailPropertyFunc } from "../../lib/detailProperty/detailProperty"
+import { RoomFunc } from "../../lib/roomFunc/roomFunc"
 
 const ListingDetails = () => {
   const authSelector = useSelector((state) => state.auth)
   const [listing, setListing] = useState([])
-  const [room, setRoom] = useState([])
-  const [propertyPhoto, setPropertyPhoto] = useState([])
-  const [images, setImages] = useState([])
   const [getDateRooms, setGetDateRooms] = useState([])
 
   const params = useParams()
   const toast = useToast()
+  const { roomCard, images, room, fetchPropertyById } = DetailPropertyFunc()
+  const { deleteRoom } = RoomFunc()
 
-  const fetchListingDetails = async () => {
-    try {
-      const response = await axiosInstance.get(`/property/${params.id}`)
-
-      setListing(response.data.data)
-      setPropertyPhoto(response.data.data)
-      setImages(response.data.data.PropertyImages)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  //=======================GET ROOM
-  const fetchRoom = async () => {
-    try {
-      const response = await axiosInstance.get(`/room/${params.id}`)
-
-      setRoom(response.data.data.PropertyItems)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  //===============================DELETE ROOM
-  const deleteRoom = async (id) => {
-    try {
-      await axiosInstance.delete(`/room/delete/${id}`)
-
-      window.location.reload(false)
-      toast({ title: "Post deleted", status: "success" })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  //======================ROOM PROPERTY DATE
-
-  const getDateRoom = async () => {
-    try {
-      const responseData = await axiosInstance.get(`/calendar/${params.id}`)
-      setGetDateRooms(responseData.data.data)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  //============================
-  const newFormatted = getDateRooms.map((dateRoom) => {
-    const date = new Date(dateRoom.startDate)
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const formattedNewDate = `${year}${month.toString().padStart(2, "0")}${day
-      .toString()
-      .padStart(2, "0")}`
-
-    dateRoom.formattedNewDate = formattedNewDate
-
-    return dateRoom
-  })
-  // console.log(newFormatted, "coba")
-  // console.log(getDateRooms, "coba2")
-
-  //=============FIND DATE IN CALENDAR
-
-  const DateCellRender = (date) => {
-    const dateStr = date.format("YYYYMMDD")
-
-    let result = ""
-    for (let data of newFormatted) {
-      if (data.formattedNewDate === dateStr) {
-        result += `${data.PropertyItem.item_name}\n`
-      }
-    }
-    if (result !== "") {
-      return (
-        <div>
-          <Badge
-            status="error"
-            text={`${result}`}
-            style={{ fontSize: "0.5rem" }}
-          />
-        </div>
-      )
-    }
-    // console.log(result, "coba2")
-  }
+  console.log(listing, "listing")
+  console.log(roomCard, "listing2")
 
   const renderRoomCard = () => {
     return room.map((val) => {
@@ -153,34 +65,11 @@ const ListingDetails = () => {
           images={val.Images}
           onDelete={() => deleteRoom(val.id)}
           calendars={val.Calendars}
-          fetchListingDetails={fetchRoom}
+          fetchListingDetails={fetchPropertyById}
         />
       )
     })
   }
-
-  const [index, setIndex] = useState(0)
-
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex)
-  }
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 10000,
-    arrows: true,
-  }
-
-  useEffect(() => {
-    fetchListingDetails()
-    fetchRoom()
-    getDateRoom()
-  }, [])
 
   return (
     <Container maxWidth="4xl" mt="100px">
@@ -219,7 +108,6 @@ const ListingDetails = () => {
         spacing={{ base: 8, md: 10 }}
         pt={{ base: 18, md: 17 }}
       >
-        {/* <Slider {...settings}> */}
         <Carousel autoplay effect="fade" nextArrow={StackDivider}>
           {images?.map((val) => (
             <Image
@@ -229,11 +117,9 @@ const ListingDetails = () => {
               fit={"cover"}
               align={"center"}
               // w={"100%"}
-              h={{ base: "350px", sm: "400px", lg: "500px" }}
+              h={{ base: "300px", sm: "350px", lg: "400px" }}
             />
           ))}
-
-          {/* </Slider> */}
         </Carousel>
 
         <Stack spacing={{ base: 6, md: 5 }}>
@@ -243,7 +129,7 @@ const ListingDetails = () => {
               fontWeight={600}
               fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
             >
-              {listing.name}
+              {roomCard.name}
             </Heading>
 
             <Text
@@ -251,7 +137,7 @@ const ListingDetails = () => {
               fontSize={"md"}
               fontWeight={"300"}
             >
-              {listing.address}, {listing?.City?.cities_name}
+              {roomCard.address}, {roomCard?.City?.cities_name}
             </Text>
             <Tag
               size={"md"}
@@ -259,7 +145,7 @@ const ListingDetails = () => {
               colorScheme="yellow"
               fontSize={"xl"}
             >
-              {listing?.Category?.category_name}
+              {roomCard?.Category?.category_name}
             </Tag>
           </VStack>
 
@@ -272,18 +158,11 @@ const ListingDetails = () => {
               />
             }
           >
-            <Text fontSize={"md"}>{listing.description}</Text>
+            <Text fontSize={"md"}>{roomCard.description}</Text>
           </Stack>
         </Stack>
       </SimpleGrid>
       <Box py={{ base: 18, md: 7 }}>
-        <Box color={"blue"} textAlign="center">
-          <Text>This is a day information from your full booked room </Text>
-          {/* <Calendar
-            dateCellRender={DateCellRender}
-            style={{ textTransform: "uppercase", fontSize: "0.7rem" }}
-          /> */}
-        </Box>
         <Divider borderColor={useColorModeValue("gray.200", "gray.600")} />
         <HStack justifyContent={"space-between"}>
           <Text
@@ -296,7 +175,7 @@ const ListingDetails = () => {
             Rooms
           </Text>
           <IconButton backgroundColor={"unset"} _hover={"unset"}>
-            <Link to={`/inputroom?id=${listing.id}`}>
+            <Link to={`/inputroom?id=${roomCard.id}`}>
               <GrAdd size="25px" />
             </Link>
           </IconButton>
