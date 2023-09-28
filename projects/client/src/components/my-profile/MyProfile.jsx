@@ -36,13 +36,12 @@ const MyProfile = () => {
         <Stack
           borderWidth="1px"
           borderRadius="lg"
-          maxW={{ sm: "100%", md: "650px" }}
+          maxW={{ sm: "100%", md: "-moz-max-content" }}
           maxH={{ sm: "546px", md: "20rem" }}
           direction={{ base: "column", md: "row" }}
           bg={useColorModeValue("white", "gray.900")}
           boxShadow={"2xl"}
           padding={8}
-          // border="2px solid red"
         >
           <Flex
             flex={5}

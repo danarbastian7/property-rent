@@ -27,7 +27,7 @@ const Footer = () => {
       bg="white"
       bottom={"0"}
       zIndex={"20"}
-      position="fixed"
+      // position="fixed"
       justifyContent={"space-around"}
     >
       <Divider />
